@@ -12,7 +12,7 @@ Development and the test suite expect **Node.js 20** or newer. You can check you
 
 ## Running Tests
 
-A small QUnit test suite validates the client-side logic. Install dependencies with `npm install` (or `npm ci` when using a lockfile) and run the tests with:
+A small QUnit test suite validates the client-side logic. Install dependencies with `npm install` (or `npm ci` when using a lockfile) and run the tests with `npm test`. The `npm test` script now runs `npx qunit`:
 
 ```bash
 npm install
