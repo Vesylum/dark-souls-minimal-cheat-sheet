@@ -205,12 +205,25 @@
     }
 
     function addCheckbox(el) {
-        const $el = $(el);
-        const lines = $el.html().split('\n');
-        lines[0] = '<label class="checkbox"><input type="checkbox" id="' + $el.attr('data-id') + '">' + lines[0] + '</label>';
-        $el.html(lines.join('\n'));
-        if (profiles[profilesKey][profiles.current].checklistData[$el.attr('data-id')] == true) {
-            $('#' + $el.attr('data-id')).prop('checked', true);
+        const id = el.getAttribute('data-id');
+
+        const label = document.createElement('label');
+        label.className = 'checkbox';
+
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.id = id;
+        label.appendChild(input);
+
+        // Move existing nodes (until a child list) into the label
+        while (el.firstChild && !(el.firstChild.nodeType === 1 && el.firstChild.tagName === 'UL')) {
+            label.appendChild(el.firstChild);
+        }
+
+        el.insertBefore(label, el.firstChild);
+
+        if (profiles[profilesKey][profiles.current].checklistData[id] === true) {
+            input.checked = true;
         }
     }
 
