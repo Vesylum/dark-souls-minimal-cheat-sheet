@@ -8,9 +8,11 @@ This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. Th
 
 All files are static HTML, CSS and JavaScript. Clone the repo and open `index.html` in your browser to run it locally.
 
+Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
+
 ## Running Tests
 
-A small QUnit test suite validates the client-side logic. Install dependencies and run the tests with:
+A small QUnit test suite validates the client-side logic. Install dependencies with `npm install` (or `npm ci` when using a lockfile) and run the tests with:
 
 ```bash
 npm install
