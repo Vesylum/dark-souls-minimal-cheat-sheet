@@ -1,31 +1,45 @@
 const { JSDOM } = require('jsdom');
 const QUnit = require('qunit');
 
-const dom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = dom;
-global.window = window;
-global.document = window.document;
+let $;
+let deleted;
 
-const $ = require('jquery');
-global.$ = global.jQuery = $;
+QUnit.module('resetProgress', hooks => {
+  hooks.beforeEach(() => {
+    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+    const { window } = dom;
+    global.window = window;
+    global.document = window.document;
 
-let deleted = false;
-$.jStorage = {
-  get: (_key, def) => ({
-    current: 'Default Profile',
-    profiles: {
-      'Default Profile': {
-        checklistData: { 'foo_1_1': true }
-      }
-    }
-  }),
-  set: () => {},
-  deleteKey: () => { deleted = true; }
-};
+    delete require.cache[require.resolve('jquery')];
+    $ = require('jquery');
+    global.$ = global.jQuery = $;
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
-require('../js/main.js');
+    deleted = false;
+    $.jStorage = {
+      get: (_key, def) => ({
+        current: 'Default Profile',
+        profiles: {
+          'Default Profile': {
+            checklistData: { 'foo_1_1': true }
+          }
+        }
+      }),
+      set: () => {},
+      deleteKey: () => { deleted = true; }
+    };
 
-QUnit.module('resetProgress');
+    delete require.cache[require.resolve('../js/main.js')];
+    require('../js/main.js');
+    return new Promise(r => setTimeout(r, 50));
+  });
+
+  hooks.afterEach(() => {
+    delete global.window;
+    delete global.document;
+    delete global.$;
+  });
 
 QUnit.test('clears progress and totals', assert => {
   const html = `
@@ -44,4 +58,6 @@ QUnit.test('clears progress and totals', assert => {
   assert.ok(deleted, 'storage cleared');
   assert.strictEqual(document.getElementById('foo_1_1').checked, false);
   assert.strictEqual(document.getElementById('foo_overall_total').textContent, '[0/1]');
+});
+
 });
