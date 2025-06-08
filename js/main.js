@@ -308,6 +308,8 @@
         window.resetProgress = resetProgress;
         window.populateProfiles = populateProfiles;
         window.populateChecklists = populateChecklists;
+        window.canDelete = canDelete;
+        window.getFirstProfile = getFirstProfile;
     }
 
 })( jQuery );
