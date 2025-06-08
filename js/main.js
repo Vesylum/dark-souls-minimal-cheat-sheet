@@ -1,4 +1,5 @@
 (function($) {
+    "use strict";
 
     var defaultProfiles = {
         'current': 'Default Profile'
@@ -12,17 +13,7 @@
 
     jQuery(document).ready(function($) {
 
-        // TODO Find a better way to do this in one pass
-        $('ul li li').each(function(index) {
-            if ($(this).attr('data-id')) {
-                addCheckbox(this);
-            }
-        });
-        $('ul li').each(function(index) {
-            if ($(this).attr('data-id')) {
-                addCheckbox(this);
-            }
-        });
+        $('li[data-id]').each(function () { addCheckbox(this); });
 
         populateProfiles();
 
