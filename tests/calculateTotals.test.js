@@ -16,9 +16,6 @@ $.jStorage = {
   set: () => {}
 };
 
-// Global variable required by main.js
-global.profilesKey = 'profiles';
-
 // Load script which attaches calculateTotals to window
 require('../js/main.js');
 
