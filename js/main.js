@@ -182,11 +182,7 @@
     }
 
     function resetProgress() {
-        if ($.jStorage.flush) {
-            $.jStorage.flush();
-        } else {
-            $.jStorage.deleteKey(profilesKey);
-        }
+        $.jStorage.deleteKey(profilesKey);
         profiles = $.extend(true, {}, defaultProfiles);
         $.jStorage.set(profilesKey, profiles);
         populateProfiles();
