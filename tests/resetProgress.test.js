@@ -6,7 +6,7 @@ let deleted;
 
 QUnit.module('resetProgress', hooks => {
   hooks.beforeEach(() => {
-    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+    const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
     global.document = window.document;
@@ -17,18 +17,18 @@ QUnit.module('resetProgress', hooks => {
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
     deleted = false;
-    $.jStorage = {
-      get: (_key, def) => ({
-        current: 'Default Profile',
-        profiles: {
-          'Default Profile': {
-            checklistData: { 'foo_1_1': true }
-          }
+    const initialStore = {
+      current: 'Default Profile',
+      profiles: {
+        'Default Profile': {
+          checklistData: { 'foo_1_1': true }
         }
-      }),
-      set: () => {},
-      deleteKey: () => { deleted = true; }
+      }
     };
+    const ls = window.localStorage;
+    const origRemove = ls.__proto__.removeItem;
+    ls.__proto__.removeItem = function(key) { deleted = true; origRemove.call(this, key); };
+    ls.setItem('profiles', JSON.stringify(initialStore));
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');

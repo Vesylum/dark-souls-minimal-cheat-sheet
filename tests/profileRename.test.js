@@ -12,7 +12,7 @@ QUnit.module('profile rename', hooks => {
       + '<div id="profileModal"></div>\n'
       + '<select id="profiles"></select>\n'
       + '<a id="profileModalUpdate"></a>\n'
-      + '</body></html>');
+      + '</body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
     global.document = window.document;
@@ -29,10 +29,7 @@ QUnit.module('profile rename', hooks => {
       'Existing': { checklistData: {} }
     };
 
-    $.jStorage = {
-      get: () => store,
-      set: (_key, val) => { store = val; }
-    };
+    window.localStorage.setItem('profiles', JSON.stringify(store));
 
     alertCalled = false;
     global.alert = () => { alertCalled = true; };
@@ -53,6 +50,7 @@ QUnit.test('alert when renaming to existing profile', assert => {
   $('#profileModalName').val('Existing');
   $('#profileModalUpdate').trigger('click');
   assert.ok(alertCalled, 'alert shown');
+  store = JSON.parse(window.localStorage.getItem('profiles'));
   assert.strictEqual(store.current, 'Default Profile', 'current profile unchanged');
   assert.ok(store.profiles['Default Profile'], 'original profile kept');
   assert.ok(store.profiles['Existing'], 'existing profile kept');
