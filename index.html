@@ -15,9 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-2ct7Gh6WijC1ga8zmnjHHirFeB8WYm1E9JGHPa9yK6M=" crossorigin="anonymous"></script>
     <script>
         if (!window.jQuery) {
-            var script = document.createElement('script');
-            script.src = 'js/jquery-3.7.1.min.js';
-            document.head.appendChild(script);
+            document.write('<script src="js/jquery-3.7.1.min.js"><\\/script>');
         }
     </script>
     <script type="text/javascript">
