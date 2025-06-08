@@ -63,4 +63,14 @@ QUnit.module('export/import progress', hooks => {
     assert.ok(document.getElementById('foo_1_2').checked, 'checkbox updated');
     assert.notOk(document.getElementById('foo_1_1').checked, 'checkbox updated');
   });
+
+  QUnit.test('restoreProfiles rejects invalid current', assert => {
+    const invalid = { current: 'Missing', profiles: { 'Profile1': { checklistData: {} } } };
+    const before = JSON.parse(window.localStorage.getItem('profiles'));
+    const ok = window.restoreProfiles(JSON.stringify(invalid));
+    assert.notOk(ok, 'restore failed');
+    const after = JSON.parse(window.localStorage.getItem('profiles'));
+    assert.deepEqual(after, before, 'localStorage unchanged');
+    assert.strictEqual(document.getElementById('profiles').value, 'Profile1', 'profile select unchanged');
+  });
 });
