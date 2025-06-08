@@ -57,6 +57,10 @@
             $('#profileModal').modal('show');
         });
 
+        $('#progressReset').click(function() {
+            resetProgress();
+        });
+
         $('#profileModalAdd').click(function(event) {
             event.preventDefault();
             var profile = $.trim($('#profileModalName').val());
@@ -175,6 +179,18 @@
         }
     }
 
+    function resetProgress() {
+        if ($.jStorage.flush) {
+            $.jStorage.flush();
+        } else {
+            $.jStorage.deleteKey(profilesKey);
+        }
+        profiles = $.extend(true, {}, defaultProfiles);
+        $.jStorage.set(profilesKey, profiles);
+        populateProfiles();
+        populateChecklists();
+    }
+
     function canDelete() {
         var count = 0;
         $.each(profiles[profilesKey], function(index, value) {
@@ -189,9 +205,10 @@
         }
     }
 
-    // Expose calculateTotals for testing
+    // Expose functions for testing
     if (typeof window !== 'undefined') {
         window.calculateTotals = calculateTotals;
+        window.resetProgress = resetProgress;
     }
 
 })( jQuery );
