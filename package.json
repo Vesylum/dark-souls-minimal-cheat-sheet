@@ -12,6 +12,7 @@
     "jquery": "^3.7.1"
   },
   "scripts": {
+    "start": "npx serve",
     "test": "qunit tests"
   }
 }
