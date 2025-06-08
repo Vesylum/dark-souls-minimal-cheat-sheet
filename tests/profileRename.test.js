@@ -1,40 +1,53 @@
 const { JSDOM } = require('jsdom');
 const QUnit = require('qunit');
 
-// Setup DOM with required elements before loading script
-const dom = new JSDOM('<!doctype html><html><body>\n'
-  + '<input id="profileModalName">\n'
-  + '<div id="profileModal"></div>\n'
-  + '<select id="profiles"></select>\n'
-  + '<a id="profileModalUpdate"></a>\n'
-  + '</body></html>');
-const { window } = dom;
-global.window = window;
-global.document = window.document;
+let $;
+let store;
+let alertCalled;
 
-const $ = require('jquery');
-global.$ = global.jQuery = $;
+QUnit.module('profile rename', hooks => {
+  hooks.beforeEach(() => {
+    const dom = new JSDOM('<!doctype html><html><body>\n'
+      + '<input id="profileModalName">\n'
+      + '<div id="profileModal"></div>\n'
+      + '<select id="profiles"></select>\n'
+      + '<a id="profileModalUpdate"></a>\n'
+      + '</body></html>');
+    const { window } = dom;
+    global.window = window;
+    global.document = window.document;
 
-// stub bootstrap modal
-$.fn.modal = () => {};
+    delete require.cache[require.resolve('jquery')];
+    $ = require('jquery');
+    global.$ = global.jQuery = $;
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    $.fn.modal = () => {};
 
-let store = { current: 'Default Profile' };
-store['profiles'] = {
-  'Default Profile': { checklistData: {} },
-  'Existing': { checklistData: {} }
-};
+    store = { current: 'Default Profile' };
+    store['profiles'] = {
+      'Default Profile': { checklistData: {} },
+      'Existing': { checklistData: {} }
+    };
 
-$.jStorage = {
-  get: () => store,
-  set: (_key, val) => { store = val; }
-};
+    $.jStorage = {
+      get: () => store,
+      set: (_key, val) => { store = val; }
+    };
 
-let alertCalled = false;
-window.alert = () => { alertCalled = true; };
+    alertCalled = false;
+    global.alert = () => { alertCalled = true; };
+    alert = global.alert; // expose as global variable for strict mode
 
-require('../js/main.js');
+    delete require.cache[require.resolve('../js/main.js')];
+    require('../js/main.js');
+    return new Promise(r => setTimeout(r, 50));
+  });
 
-QUnit.module('profile rename');
+  hooks.afterEach(() => {
+    delete global.window;
+    delete global.document;
+    delete global.$;
+  });
 
 QUnit.test('alert when renaming to existing profile', assert => {
   $('#profileModalName').val('Existing');
@@ -43,4 +56,6 @@ QUnit.test('alert when renaming to existing profile', assert => {
   assert.strictEqual(store.current, 'Default Profile', 'current profile unchanged');
   assert.ok(store.profiles['Default Profile'], 'original profile kept');
   assert.ok(store.profiles['Existing'], 'existing profile kept');
+});
+
 });

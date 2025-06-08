@@ -1,25 +1,35 @@
 const { JSDOM } = require('jsdom');
 const QUnit = require('qunit');
 
-// Setup DOM
-const dom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = dom;
-global.window = window;
-global.document = window.document;
-// jQuery setup
-const $ = require('jquery');
-global.$ = global.jQuery = $;
+let $;
 
-// Stub jStorage used by main.js
-$.jStorage = {
-  get: (_key, def) => def,
-  set: () => {}
-};
+QUnit.module('calculateTotals', hooks => {
+  hooks.beforeEach(() => {
+    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+    const { window } = dom;
+    global.window = window;
+    global.document = window.document;
 
-// Load script which attaches calculateTotals to window
-require('../js/main.js');
+    delete require.cache[require.resolve('jquery')];
+    $ = require('jquery');
+    global.$ = global.jQuery = $;
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
-QUnit.module('calculateTotals');
+    $.jStorage = {
+      get: (_key, def) => def,
+      set: () => {}
+    };
+
+    delete require.cache[require.resolve('../js/main.js')];
+    require('../js/main.js');
+    return new Promise(r => setTimeout(r, 50));
+  });
+
+  hooks.afterEach(() => {
+    delete global.window;
+    delete global.document;
+    delete global.$;
+  });
 
 QUnit.test('updates totals based on checkbox states', assert => {
   const html = `
@@ -41,4 +51,6 @@ QUnit.test('updates totals based on checkbox states', assert => {
   assert.strictEqual(document.getElementById('foo_totals_1').textContent, '[DONE]');
   assert.strictEqual(document.getElementById('foo_nav_totals_1').textContent, '[DONE]');
   assert.strictEqual(document.getElementById('foo_overall_total').textContent, '[DONE]');
+});
+
 });
