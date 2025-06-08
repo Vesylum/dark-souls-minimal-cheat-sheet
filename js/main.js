@@ -263,6 +263,12 @@
         if (!data || typeof data !== 'object' || !(profilesKey in data)) {
             return false;
         }
+        if (typeof data.current !== 'string') {
+            return false;
+        }
+        if (!(data.current in data[profilesKey])) {
+            return false;
+        }
         profiles = data;
         storageSet(profilesKey, profiles);
         populateProfiles();
