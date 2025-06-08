@@ -15,6 +15,8 @@ QUnit.module('calculateTotals', hooks => {
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
+    $.getJSON = (_url, cb) => { cb({}); };
+
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');

@@ -21,6 +21,7 @@ QUnit.module('profile rename', hooks => {
     $ = require('jquery');
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    $.getJSON = (_url, cb) => { cb({}); };
     $.fn.modal = () => {};
 
     store = { current: 'Default Profile' };

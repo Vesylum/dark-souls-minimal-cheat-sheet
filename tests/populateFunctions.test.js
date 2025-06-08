@@ -10,7 +10,7 @@ QUnit.module('populate functions', hooks => {
       + '<select id="profiles"></select>\n'
       + '<input type="checkbox" id="foo_1_1">\n'
       + '<input type="checkbox" id="foo_1_2">\n'
-      + '</body></html>');
+      + '</body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
     global.document = window.document;
@@ -20,6 +20,8 @@ QUnit.module('populate functions', hooks => {
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
+    $.getJSON = (_url, cb) => { cb({}); };
+
     store = {
       current: 'Profile B'
     };
@@ -28,10 +30,7 @@ QUnit.module('populate functions', hooks => {
       'Profile B': { checklistData: { 'foo_1_1': false, 'foo_1_2': true } }
     };
 
-    $.jStorage = {
-      get: () => store,
-      set: (_key, val) => { store = val; }
-    };
+    window.localStorage.setItem('profiles', JSON.stringify(store));
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');
