@@ -1,7 +1,7 @@
 {
   "name": "dark-souls-cheat-sheet",
   "version": "1.0.0",
-  "description": "Dark Souls Cheat Sheet",
+  "description": "Dark Souls Minimal Cheat Sheet",
   "devDependencies": {
     "qunit": "^2.20.0",
     "jsdom": "^22.1.0",

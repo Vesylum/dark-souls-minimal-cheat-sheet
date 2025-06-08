@@ -1,6 +1,6 @@
-# Dark Souls Cheat Sheet
+# Dark Souls Minimal Cheat Sheet
 
-This repository contains the code for the **Dark Souls Cheat Sheet**. The site provides a step‑by‑step checklist for the original game and saves your progress locally so you can pick up where you left off.
+This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. The site provides a step‑by‑step checklist for the original game and saves your progress locally so you can pick up where you left off.
 
 [View the live site here.](https://vesylum.github.io/dark-souls-cheat-sheet/)
 
