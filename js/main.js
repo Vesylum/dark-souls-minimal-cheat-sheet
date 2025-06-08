@@ -81,19 +81,25 @@
             $('#profileModal').modal('hide');
         });
 
-        $('#profileModalUpdate').click(function(event) {
-            event.preventDefault();
-            const $name = $('#profileModalName');
-            const newName = $.trim($name.val());
+       $('#profileModalUpdate').click(function(event) {
+           event.preventDefault();
+           const $name = $('#profileModalName');
+           const newName = $.trim($name.val());
             if (newName.length > 0 && newName != profiles.current) {
+                if (typeof profiles[profilesKey][newName] !== 'undefined') {
+                    alert('Profile already exists');
+                    return;
+                }
                 profiles[profilesKey][newName] = profiles[profilesKey][profiles.current];
                 delete profiles[profilesKey][profiles.current];
                 profiles.current = newName;
                 $.jStorage.set(profilesKey, profiles);
                 populateProfiles();
+                $('#profileModal').modal('hide');
+            } else {
+                $('#profileModal').modal('hide');
             }
-            $('#profileModal').modal('hide');
-        });
+       });
 
         $('#profileModalDelete').click(function(event) {
             event.preventDefault();
