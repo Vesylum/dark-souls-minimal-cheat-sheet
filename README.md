@@ -7,6 +7,11 @@ This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. Th
 ## Development
 
 All files are static HTML, CSS and JavaScript. Clone the repo and open `index.html` in your browser to run it locally.
+You can also start a local server with:
+
+```bash
+npm start
+```
 
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 
