@@ -81,7 +81,9 @@
         });
 
         $('#progressReset').click(function() {
-            resetProgress();
+            if (confirm('Reset all progress?')) {
+                resetProgress();
+            }
         });
 
         $('#progressExport').click(function() {
