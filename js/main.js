@@ -4,12 +4,12 @@
     function storageGet(key, def) {
         const val = window.localStorage.getItem(key);
         if (val === null) {
-            return def;
+            return $.extend(true, {}, def);
         }
         try {
             return JSON.parse(val);
         } catch (e) {
-            return def;
+            return $.extend(true, {}, def);
         }
     }
 
