@@ -16,6 +16,8 @@ QUnit.module('resetProgress', hooks => {
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
+    $.getJSON = (_url, cb) => { cb({}); };
+
     deleted = false;
     const initialStore = {
       current: 'Default Profile',
