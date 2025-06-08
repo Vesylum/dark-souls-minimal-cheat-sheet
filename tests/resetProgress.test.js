@@ -9,7 +9,7 @@ global.document = window.document;
 const $ = require('jquery')(window);
 global.$ = global.jQuery = $;
 
-let flushed = false;
+let deleted = false;
 $.jStorage = {
   get: (_key, def) => ({
     current: 'Default Profile',
@@ -20,7 +20,7 @@ $.jStorage = {
     }
   }),
   set: () => {},
-  flush: () => { flushed = true; }
+  deleteKey: () => { deleted = true; }
 };
 
 require('../js/main.js');
@@ -41,7 +41,7 @@ QUnit.test('clears progress and totals', assert => {
   assert.ok(document.getElementById('foo_1_1').checked);
 
   window.resetProgress();
-  assert.ok(flushed, 'storage flushed');
+  assert.ok(deleted, 'storage cleared');
   assert.strictEqual(document.getElementById('foo_1_1').checked, false);
   assert.strictEqual(document.getElementById('foo_overall_total').textContent, '[0/1]');
 });
