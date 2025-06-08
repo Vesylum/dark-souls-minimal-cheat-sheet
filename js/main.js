@@ -250,11 +250,20 @@
     }
 
     function loadPlaythrough() {
-        $.getJSON('data/playthrough.json', function(data) {
+        const request = $.getJSON('data/playthrough.json', function(data) {
             renderPlaythrough(data);
             $('li[data-id]').each(function () { addCheckbox(this); });
             populateChecklists();
         });
+        if (request && typeof request.fail === 'function') {
+            request.fail(function() {
+                const msg = 'Failed to load playthrough data';
+                alert(msg);
+                $('#playthrough_sections').html(
+                    '<p class="text-danger">' + msg + '</p>'
+                );
+            });
+        }
     }
 
     function renderPlaythrough(sections) {
