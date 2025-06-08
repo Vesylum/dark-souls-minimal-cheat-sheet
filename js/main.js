@@ -38,7 +38,7 @@
         loadPlaythrough();
         populateProfiles();
 
-        $('input[type="checkbox"]').click(function() {
+        $(document).on('click', 'input[type="checkbox"]', function () {
             const $checkbox = $(this);
             const id = $checkbox.attr('id');
             const isChecked = profiles[profilesKey][profiles.current].checklistData[id] = $checkbox.prop('checked');
