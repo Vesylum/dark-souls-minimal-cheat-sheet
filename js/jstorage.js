@@ -54,7 +54,9 @@
         /* This is the object, that holds the cached values */
         _storage = {},
 
-        /* Actual browser storage (localStorage or globalStorage['domain']) */
+        /* Placeholder for the actual browser storage; initialization will
+         * assign the real storage object (localStorage or
+         * globalStorage['domain']) */
         _storage_service = {jStorage:"{}"},
 
         /* DOM element for older IE versions, holds userData behavior */
