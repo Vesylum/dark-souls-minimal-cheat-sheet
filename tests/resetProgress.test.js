@@ -23,8 +23,6 @@ $.jStorage = {
   flush: () => { flushed = true; }
 };
 
-global.profilesKey = 'profiles';
-
 require('../js/main.js');
 
 QUnit.module('resetProgress');

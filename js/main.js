@@ -1,6 +1,8 @@
 (function($) {
     "use strict";
 
+    var profilesKey = window.profilesKey || 'profiles';
+
     var defaultProfiles = {
         'current': 'Default Profile'
     };
