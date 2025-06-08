@@ -25,6 +25,12 @@ npm test
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
 
+## Exporting and Importing Progress
+
+The site stores your checklist data in the browser. Click **Export Progress** to
+copy it as a JSON string. Use **Import Progress** to paste that string into
+another browser or after clearing your storage to restore your progress.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

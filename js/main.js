@@ -84,6 +84,20 @@
             resetProgress();
         });
 
+        $('#progressExport').click(function() {
+            const data = serializeProfiles();
+            window.prompt('Copy your progress JSON', data);
+        });
+
+        $('#progressImport').click(function() {
+            const data = window.prompt('Paste progress JSON to import');
+            if (data) {
+                if (!restoreProfiles(data)) {
+                    alert('Invalid progress data');
+                }
+            }
+        });
+
         $('#profileModalAdd').click(function(event) {
             event.preventDefault();
             const $name = $('#profileModalName');
@@ -235,6 +249,27 @@
         populateChecklists();
     }
 
+    function serializeProfiles() {
+        return JSON.stringify(profiles);
+    }
+
+    function restoreProfiles(json) {
+        let data;
+        try {
+            data = JSON.parse(json);
+        } catch (e) {
+            return false;
+        }
+        if (!data || typeof data !== 'object' || !(profilesKey in data)) {
+            return false;
+        }
+        profiles = data;
+        storageSet(profilesKey, profiles);
+        populateProfiles();
+        populateChecklists();
+        return true;
+    }
+
     function canDelete() {
         let count = 0;
         $.each(profiles[profilesKey], function(index, value) {
@@ -315,6 +350,8 @@
     if (typeof window !== 'undefined') {
         window.calculateTotals = calculateTotals;
         window.resetProgress = resetProgress;
+        window.serializeProfiles = serializeProfiles;
+        window.restoreProfiles = restoreProfiles;
         window.populateProfiles = populateProfiles;
         window.populateChecklists = populateChecklists;
         window.canDelete = canDelete;
