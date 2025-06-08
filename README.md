@@ -18,3 +18,8 @@ npm test
 ```
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
