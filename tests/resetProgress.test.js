@@ -6,7 +6,7 @@ const { window } = dom;
 global.window = window;
 global.document = window.document;
 
-const $ = require('jquery')(window);
+const $ = require('jquery');
 global.$ = global.jQuery = $;
 
 let deleted = false;
