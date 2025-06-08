@@ -7,7 +7,7 @@ const { window } = dom;
 global.window = window;
 global.document = window.document;
 // jQuery setup
-const $ = require('jquery')(window);
+const $ = require('jquery');
 global.$ = global.jQuery = $;
 
 // Stub jStorage used by main.js

@@ -12,6 +12,6 @@
     "jquery": "^3.7.1"
   },
   "scripts": {
-    "test": "qunit"
+    "test": "qunit tests"
   }
 }
