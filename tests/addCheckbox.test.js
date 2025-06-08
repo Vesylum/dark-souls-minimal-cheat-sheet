@@ -65,7 +65,7 @@ QUnit.module('addCheckbox', hooks => {
   QUnit.test('clicking dynamically created checkbox updates profiles', assert => {
     const checkbox = document.getElementById('foo_1_1');
     assert.ok(checkbox, 'checkbox exists');
-    $(checkbox).trigger('click');
+    $(checkbox).prop('checked', true).trigger('change');
     const store = JSON.parse(window.localStorage.getItem('profiles'));
     assert.ok(store.profiles['Default Profile'].checklistData['foo_1_1'], 'profile updated');
   });

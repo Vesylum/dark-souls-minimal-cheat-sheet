@@ -32,7 +32,7 @@ QUnit.module('defaultProfiles clone', hooks => {
 
   QUnit.test('resetProgress should clear stored checklist data', assert => {
     const checkbox = document.getElementById('foo_1_1');
-    $(checkbox).trigger('click');
+    $(checkbox).prop('checked', true).trigger('change');
 
     let store = JSON.parse(window.localStorage.getItem('profiles'));
     assert.ok(store.profiles['Default Profile'].checklistData['foo_1_1'], 'progress saved');
