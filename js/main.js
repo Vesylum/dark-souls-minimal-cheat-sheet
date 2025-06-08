@@ -221,6 +221,8 @@
     if (typeof window !== 'undefined') {
         window.calculateTotals = calculateTotals;
         window.resetProgress = resetProgress;
+        window.populateProfiles = populateProfiles;
+        window.populateChecklists = populateChecklists;
     }
 
 })( jQuery );
