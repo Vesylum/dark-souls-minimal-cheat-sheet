@@ -5,7 +5,7 @@ let $;
 
 QUnit.module('calculateTotals', hooks => {
   hooks.beforeEach(() => {
-    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+    const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
     global.document = window.document;
@@ -15,10 +15,6 @@ QUnit.module('calculateTotals', hooks => {
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
-    $.jStorage = {
-      get: (_key, def) => def,
-      set: () => {}
-    };
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');

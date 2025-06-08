@@ -1,6 +1,26 @@
 (function($) {
     "use strict";
 
+    function storageGet(key, def) {
+        const val = window.localStorage.getItem(key);
+        if (val === null) {
+            return def;
+        }
+        try {
+            return JSON.parse(val);
+        } catch (e) {
+            return def;
+        }
+    }
+
+    function storageSet(key, val) {
+        window.localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    function storageDelete(key) {
+        window.localStorage.removeItem(key);
+    }
+
     const profilesKey = window.profilesKey || 'profiles';
 
     const defaultProfiles = {
@@ -11,7 +31,7 @@
             checklistData: {}
         }
     }
-    let profiles = $.jStorage.get(profilesKey, defaultProfiles);
+    let profiles = storageGet(profilesKey, defaultProfiles);
 
     jQuery(document).ready(function($) {
 
@@ -28,14 +48,14 @@
                 profiles[profilesKey][profiles.current].checklistData[childId] = isChecked;
                 $(this).prop('checked', isChecked);
             });
-            $.jStorage.set(profilesKey, profiles);
+            storageSet(profilesKey, profiles);
             calculateTotals();
         });
 
         $('#profiles').change(function(event) {
             const $select = $(this);
             profiles.current = $select.val();
-            $.jStorage.set(profilesKey, profiles);
+            storageSet(profilesKey, profiles);
             populateChecklists();
         });
 
@@ -74,7 +94,7 @@
                     profiles[profilesKey][profile] = { checklistData: {} };
                 }
                 profiles.current = profile;
-                $.jStorage.set(profilesKey, profiles);
+                storageSet(profilesKey, profiles);
                 populateProfiles();
                 populateChecklists();
             }
@@ -93,7 +113,7 @@
                 profiles[profilesKey][newName] = profiles[profilesKey][profiles.current];
                 delete profiles[profilesKey][profiles.current];
                 profiles.current = newName;
-                $.jStorage.set(profilesKey, profiles);
+                storageSet(profilesKey, profiles);
                 populateProfiles();
                 $('#profileModal').modal('hide');
             } else {
@@ -111,7 +131,7 @@
             }
             delete profiles[profilesKey][profiles.current];
             profiles.current = getFirstProfile();
-            $.jStorage.set(profilesKey, profiles);
+            storageSet(profilesKey, profiles);
             populateProfiles();
             populateChecklists();
             $('#profileModal').modal('hide');
@@ -196,9 +216,9 @@
     }
 
     function resetProgress() {
-        $.jStorage.deleteKey(profilesKey);
+        storageDelete(profilesKey);
         profiles = $.extend(true, {}, defaultProfiles);
-        $.jStorage.set(profilesKey, profiles);
+        storageSet(profilesKey, profiles);
         populateProfiles();
         populateChecklists();
     }
