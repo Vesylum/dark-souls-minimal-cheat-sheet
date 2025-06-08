@@ -15,8 +15,7 @@
 
     jQuery(document).ready(function($) {
 
-        $('li[data-id]').each(function () { addCheckbox(this); });
-
+        loadPlaythrough();
         populateProfiles();
 
         $('input[type="checkbox"]').click(function() {
@@ -215,6 +214,59 @@
         for (const profile in profiles[profilesKey]) {
             return profile;
         }
+    }
+
+    function loadPlaythrough() {
+        $.getJSON('data/playthrough.json', function(data) {
+            renderPlaythrough(data);
+            $('li[data-id]').each(function () { addCheckbox(this); });
+            populateChecklists();
+        });
+    }
+
+    function renderPlaythrough(sections) {
+        const $nav = $('#playthrough_nav');
+        const $container = $('#playthrough_sections');
+        $nav.empty();
+        $container.empty();
+        $.each(sections, function(i, section) {
+            const index = i + 1;
+            const $navLi = $('<li></li>');
+            $navLi.append($('<a></a>').attr('href', '#' + section.id).text(section.title));
+            if (section.level) {
+                $navLi.append(' (' + section.level + ')');
+            }
+            $navLi.append(' <span id="playthrough_nav_totals_' + index + '"></span>');
+            $nav.append($navLi);
+
+            const $header = $('<h3></h3>').attr('id', section.id);
+            if (section.href) {
+                $header.append($('<a></a>').attr('href', section.href).text(section.title));
+            } else {
+                $header.text(section.title);
+            }
+            if (section.level) {
+                $header.append(' (' + section.level + ')');
+            }
+            $header.append(' <span id="playthrough_totals_' + index + '"></span>');
+            $container.append($header);
+
+            const $ul = $('<ul></ul>');
+            buildItems(section.items, $ul);
+            $container.append($ul);
+        });
+    }
+
+    function buildItems(items, $ul) {
+        $.each(items, function(_, item) {
+            const $li = $('<li></li>').attr('data-id', item.id).html(item.content);
+            if (item.children) {
+                const $child = $('<ul></ul>');
+                buildItems(item.children, $child);
+                $li.append($child);
+            }
+            $ul.append($li);
+        });
     }
 
     // Expose functions for testing
