@@ -11,13 +11,14 @@ All files are static HTML, CSS and JavaScript. Clone the repo and open `index.ht
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 
 Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
+When installing dependencies, run `npm ci` to guarantee a reproducible environment.
 
 ## Running Tests
 
-A small QUnit test suite validates the client-side logic. Install dependencies with `npm install` or use `npm ci` for reproducible installs and run the tests with:
+A small QUnit test suite validates the client-side logic. Install dependencies with `npm ci` for reproducible installs and run the tests with:
 
 ```bash
-npm install
+npm ci
 npm test
 ```
 
