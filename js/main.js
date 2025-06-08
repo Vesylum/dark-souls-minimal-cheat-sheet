@@ -1,9 +1,9 @@
 (function($) {
     "use strict";
 
-    var profilesKey = window.profilesKey || 'profiles';
+    const profilesKey = window.profilesKey || 'profiles';
 
-    var defaultProfiles = {
+    const defaultProfiles = {
         'current': 'Default Profile'
     };
     defaultProfiles[profilesKey] = {
@@ -11,7 +11,7 @@
             checklistData: {}
         }
     }
-    var profiles = $.jStorage.get(profilesKey, defaultProfiles);
+    let profiles = $.jStorage.get(profilesKey, defaultProfiles);
 
     jQuery(document).ready(function($) {
 
@@ -20,11 +20,12 @@
         populateProfiles();
 
         $('input[type="checkbox"]').click(function() {
-            var id = $(this).attr('id');
-            var isChecked = profiles[profilesKey][profiles.current].checklistData[id] = $(this).prop('checked');
-            $(this).parent().parent().find('li > label > input[type="checkbox"]').each(function() {
-                var id = $(this).attr('id');
-                profiles[profilesKey][profiles.current].checklistData[id] = isChecked;
+            const $checkbox = $(this);
+            const id = $checkbox.attr('id');
+            const isChecked = profiles[profilesKey][profiles.current].checklistData[id] = $checkbox.prop('checked');
+            $checkbox.parent().parent().find('li > label > input[type="checkbox"]').each(function() {
+                const childId = $(this).attr('id');
+                profiles[profilesKey][profiles.current].checklistData[childId] = isChecked;
                 $(this).prop('checked', isChecked);
             });
             $.jStorage.set(profilesKey, profiles);
@@ -32,7 +33,8 @@
         });
 
         $('#profiles').change(function(event) {
-            profiles.current = $(this).val();
+            const $select = $(this);
+            profiles.current = $select.val();
             $.jStorage.set(profilesKey, profiles);
             populateChecklists();
         });
@@ -65,7 +67,8 @@
 
         $('#profileModalAdd').click(function(event) {
             event.preventDefault();
-            var profile = $.trim($('#profileModalName').val());
+            const $name = $('#profileModalName');
+            const profile = $.trim($name.val());
             if (profile.length > 0) {
                 if (typeof profiles[profilesKey][profile] == 'undefined') {
                     profiles[profilesKey][profile] = { checklistData: {} };
@@ -80,7 +83,8 @@
 
         $('#profileModalUpdate').click(function(event) {
             event.preventDefault();
-            var newName = $.trim($('#profileModalName').val());
+            const $name = $('#profileModalName');
+            const newName = $.trim($name.val());
             if (newName.length > 0 && newName != profiles.current) {
                 profiles[profilesKey][newName] = profiles[profilesKey][profiles.current];
                 delete profiles[profilesKey][profiles.current];
@@ -133,51 +137,55 @@
     }
 
     function calculateTotals() {
-        $('[id$="_overall_total"]').each(function(index) {
-            var type = this.id.match(/(.*)_overall_total/)[1];
-            var overallCount = 0, overallChecked = 0;
-            $('[id^="' + type + '_totals_"]').each(function(index) {
-                var regex = new RegExp(type + '_totals_(.*)');
-                var i = parseInt(this.id.match(regex)[1]);
-                var count = 0, checked = 0;
-                for (var j = 1; ; j++) {
-                    var checkbox = $('#' + type + '_' + i + '_' + j);
-                    if (checkbox.length == 0) {
+        $('[id$="_overall_total"]').each(function() {
+            const $overall = $(this);
+            const type = this.id.match(/(.*)_overall_total/)[1];
+            let overallCount = 0, overallChecked = 0;
+            $('[id^="' + type + '_totals_"]').each(function() {
+                const $total = $(this);
+                const regex = new RegExp(type + '_totals_(.*)');
+                const i = parseInt(this.id.match(regex)[1]);
+                let count = 0, checked = 0;
+                for (let j = 1; ; j++) {
+                    const $checkbox = $('#' + type + '_' + i + '_' + j);
+                    if ($checkbox.length === 0) {
                         break;
                     }
                     count++;
                     overallCount++;
-                    if (checkbox.prop('checked')) {
+                    if ($checkbox.prop('checked')) {
                         checked++;
                         overallChecked++;
                     }
                 }
-                if (checked == count) {
-                    this.innerHTML = $('#' + type + '_nav_totals_' + i)[0].innerHTML = '[DONE]';
-                    $(this).removeClass('in_progress').addClass('done');
-                    $($('#' + type + '_nav_totals_' + i)[0]).removeClass('in_progress').addClass('done');
+                const $navTotals = $('#' + type + '_nav_totals_' + i);
+                if (checked === count) {
+                    $total[0].innerHTML = $navTotals[0].innerHTML = '[DONE]';
+                    $total.removeClass('in_progress').addClass('done');
+                    $navTotals.removeClass('in_progress').addClass('done');
                 } else {
-                    this.innerHTML = $('#' + type + '_nav_totals_' + i)[0].innerHTML = '[' + checked + '/' + count + ']';
-                    $(this).removeClass('done').addClass('in_progress');
-                    $($('#' + type + '_nav_totals_' + i)[0]).removeClass('done').addClass('in_progress');
+                    $total[0].innerHTML = $navTotals[0].innerHTML = '[' + checked + '/' + count + ']';
+                    $total.removeClass('done').addClass('in_progress');
+                    $navTotals.removeClass('done').addClass('in_progress');
                 }
             });
-            if (overallChecked == overallCount) {
-                this.innerHTML = '[DONE]';
-                $(this).removeClass('in_progress').addClass('done');
+            if (overallChecked === overallCount) {
+                $overall[0].innerHTML = '[DONE]';
+                $overall.removeClass('in_progress').addClass('done');
             } else {
-                this.innerHTML = '[' + overallChecked + '/' + overallCount + ']';
-                $(this).removeClass('done').addClass('in_progress');
+                $overall[0].innerHTML = '[' + overallChecked + '/' + overallCount + ']';
+                $overall.removeClass('done').addClass('in_progress');
             }
         });
     }
 
     function addCheckbox(el) {
-        var lines = $(el).html().split('\n');
-        lines[0] = '<label class="checkbox"><input type="checkbox" id="' + $(el).attr('data-id') + '">' + lines[0] + '</label>';
-        $(el).html(lines.join('\n'));
-        if (profiles[profilesKey][profiles.current].checklistData[$(el).attr('data-id')] == true) {
-            $('#' + $(el).attr('data-id')).prop('checked', true);
+        const $el = $(el);
+        const lines = $el.html().split('\n');
+        lines[0] = '<label class="checkbox"><input type="checkbox" id="' + $el.attr('data-id') + '">' + lines[0] + '</label>';
+        $el.html(lines.join('\n'));
+        if (profiles[profilesKey][profiles.current].checklistData[$el.attr('data-id')] == true) {
+            $('#' + $el.attr('data-id')).prop('checked', true);
         }
     }
 
@@ -190,7 +198,7 @@
     }
 
     function canDelete() {
-        var count = 0;
+        let count = 0;
         $.each(profiles[profilesKey], function(index, value) {
             count++;
         });
@@ -198,7 +206,7 @@
     }
 
     function getFirstProfile() {
-        for (var profile in profiles[profilesKey]) {
+        for (const profile in profiles[profilesKey]) {
             return profile;
         }
     }
