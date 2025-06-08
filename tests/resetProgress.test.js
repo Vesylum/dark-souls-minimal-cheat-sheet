@@ -6,7 +6,9 @@ let deleted;
 
 QUnit.module('resetProgress', hooks => {
   hooks.beforeEach(() => {
-    const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
+    const dom = new JSDOM('<!doctype html><html><body>'
+      + '<button id="progressReset"></button>'
+      + '</body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
     global.document = window.document;
@@ -60,6 +62,23 @@ QUnit.test('clears progress and totals', assert => {
   assert.ok(deleted, 'storage cleared');
   assert.strictEqual(document.getElementById('foo_1_1').checked, false);
   assert.strictEqual(document.getElementById('foo_overall_total').textContent, '[0/1]');
+});
+
+QUnit.test('click handler confirms before resetting', assert => {
+  const button = $('#progressReset');
+  let confirmCalls = 0;
+  window.confirm = global.confirm = () => { confirmCalls++; return false; };
+
+  button.trigger('click');
+
+  let store = JSON.parse(window.localStorage.getItem('profiles'));
+  assert.strictEqual(confirmCalls, 1, 'confirm called');
+  assert.ok(store.profiles['Default Profile'].checklistData['foo_1_1'], 'progress kept when cancelled');
+
+  window.confirm = global.confirm = () => true;
+  button.trigger('click');
+  store = JSON.parse(window.localStorage.getItem('profiles'));
+  assert.deepEqual(store.profiles['Default Profile'].checklistData, {}, 'progress cleared after confirmation');
 });
 
 });
