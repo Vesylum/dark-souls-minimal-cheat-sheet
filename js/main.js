@@ -198,4 +198,9 @@
         }
     }
 
+    // Expose calculateTotals for testing
+    if (typeof window !== 'undefined') {
+        window.calculateTotals = calculateTotals;
+    }
+
 })( jQuery );
