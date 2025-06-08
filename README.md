@@ -1,14 +1,20 @@
-## Dark Souls Cheat Sheet
+# Dark Souls Cheat Sheet
 
-To view the cheat sheet [click here](https://smcnabb.github.io/dark-souls-cheat-sheet/).
+This repository contains the code for the **Dark Souls Cheat Sheet**. The site provides a step‑by‑step checklist for the original game and saves your progress locally so you can pick up where you left off.
+
+[View the live site here.](https://vesylum.github.io/dark-souls-cheat-sheet/)
+
+## Development
+
+All files are static HTML, CSS and JavaScript. Clone the repo and open `index.html` in your browser to run it locally.
 
 ## Running Tests
 
-This project includes a small QUnit test suite. Install dependencies and run the tests with:
+A small QUnit test suite validates the client-side logic. Install dependencies and run the tests with:
 
 ```bash
 npm install
 npm test
 ```
 
-The tests execute using Node.js with jsdom to simulate a browser environment.
+The tests execute under Node.js using jsdom to simulate a browser environment.
