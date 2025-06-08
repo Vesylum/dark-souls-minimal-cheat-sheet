@@ -19,7 +19,7 @@ QUnit.module('addCheckbox', hooks => {
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
     $.getJSON = (_url, cb) => {
-      cb([
+      setTimeout(() => cb([
         {
           id: 'section1',
           title: 'Section 1',
@@ -31,7 +31,7 @@ QUnit.module('addCheckbox', hooks => {
             }
           ]
         }
-      ]);
+      ]), 0);
     };
 
     delete require.cache[require.resolve('../js/main.js')];
@@ -60,5 +60,13 @@ QUnit.module('addCheckbox', hooks => {
     const childUl = li.querySelector('ul');
     assert.ok(childUl, 'child ul exists');
     assert.strictEqual(childUl.parentElement, li, 'child ul not inside label');
+  });
+
+  QUnit.test('clicking dynamically created checkbox updates profiles', assert => {
+    const checkbox = document.getElementById('foo_1_1');
+    assert.ok(checkbox, 'checkbox exists');
+    $(checkbox).trigger('click');
+    const store = JSON.parse(window.localStorage.getItem('profiles'));
+    assert.ok(store.profiles['Default Profile'].checklistData['foo_1_1'], 'profile updated');
   });
 });

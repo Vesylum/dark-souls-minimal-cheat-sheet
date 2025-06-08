@@ -23,7 +23,7 @@ QUnit.module('export/import progress', hooks => {
     global.$ = global.jQuery = $;
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
 
-    $.getJSON = (_url, cb) => { cb({}); };
+    $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
 
     store1 = { current: 'Profile1' };
     store1['profiles'] = {
