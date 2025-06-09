@@ -32,7 +32,7 @@ QUnit.module('profile rename', hooks => {
     window.localStorage.setItem('profiles', JSON.stringify(store));
 
     alertCalled = false;
-    global.alert = () => { alertCalled = true; };
+    global.alert = globalThis.alert = () => { alertCalled = true; };
     alert = global.alert; // expose as global variable for strict mode
 
     await import('../js/main.js');
@@ -45,6 +45,7 @@ QUnit.module('profile rename', hooks => {
     delete global.jQuery;
     delete window.$;
     delete global.alert;
+    delete globalThis.alert;
     delete global.window;
     delete global.document;
   });

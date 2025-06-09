@@ -22,7 +22,7 @@ QUnit.module('loadPlaythrough failure', hooks => {
     });
 
     alertCalled = false;
-    global.alert = () => { alertCalled = true; };
+    global.alert = globalThis.alert = () => { alertCalled = true; };
     alert = global.alert;
 
     await import('../js/main.js');
@@ -35,6 +35,7 @@ QUnit.module('loadPlaythrough failure', hooks => {
     delete global.jQuery;
     delete window.$;
     delete global.alert;
+    delete globalThis.alert;
     delete global.window;
     delete global.document;
   });
