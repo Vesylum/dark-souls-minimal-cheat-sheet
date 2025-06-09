@@ -4,6 +4,7 @@
   "description": "Dark Souls Minimal Cheat Sheet",
   "type": "module",
   "repository": "https://github.com/Vesylum/dark-souls-minimal-cheat-sheet",
+  "type": "module",
   "engines": {
     "node": ">=20"
   },

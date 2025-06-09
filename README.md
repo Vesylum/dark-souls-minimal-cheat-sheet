@@ -12,7 +12,7 @@ Before serving, generate the service worker with `npm run build` so the cache na
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 Individual sections are collapsible using the native `<details>`/`<summary>` elements with the first section expanded by default.
 
-Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
+Development and the test suite expect **Node.js 20** or newer and use Node's ES module support. The `package.json` file sets `"type": "module"` so Node treats `*.js` files as ES modules. You can check your installed version with `node --version`.
 An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm use` after cloning.
 When installing dependencies, run `npm ci` to guarantee a reproducible environment.
 The Node build scripts use ES module syntax. `package.json` sets `"type": "module"` so Node treats `.js` files as ES modules.
