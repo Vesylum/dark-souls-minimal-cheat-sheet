@@ -18,6 +18,6 @@
     "build": "node scripts/build.js",
     "start": "npx serve",
     "test": "qunit tests",
-    "lint": "eslint js/*.js tests/*.js"
+    "lint": "eslint js/*.js tests/*.cjs"
   }
 }
