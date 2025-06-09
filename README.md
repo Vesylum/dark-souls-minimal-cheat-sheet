@@ -13,6 +13,7 @@ Checklist content now lives in `data/playthrough.json`. This file lists each pla
 Individual sections are collapsible using the native `<details>`/`<summary>` elements with the first section expanded by default.
 
 Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
+All Node scripts use ES module syntax and `package.json` sets `"type": "module"`.
 An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm use` after cloning.
 When installing dependencies, run `npm ci` to guarantee a reproducible environment.
 
