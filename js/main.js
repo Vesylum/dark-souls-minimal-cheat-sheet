@@ -478,8 +478,19 @@
     function filterItems(query, containerSelector) {
         const q = query.toLowerCase();
         $(containerSelector).find('li[data-id]').each(function() {
-            const text = $(this).text().toLowerCase();
-            $(this).toggle(text.indexOf(q) !== -1);
+            const $li = $(this);
+            const ownText = $li.clone().children('ul').remove().end().text().toLowerCase();
+            let match = ownText.indexOf(q) !== -1;
+            if (!match) {
+                $li.find('li[data-id]').each(function() {
+                    const subText = $(this).clone().children('ul').remove().end().text().toLowerCase();
+                    if (subText.indexOf(q) !== -1) {
+                        match = true;
+                        return false; // break loop
+                    }
+                });
+            }
+            $li.toggle(match);
         });
     }
 
@@ -491,6 +502,7 @@
         window.restoreProfiles = restoreProfiles;
         window.populateProfiles = populateProfiles;
         window.populateChecklists = populateChecklists;
+        window.filterItems = filterItems;
         window.canDelete = canDelete;
         window.getFirstProfile = getFirstProfile;
     }
