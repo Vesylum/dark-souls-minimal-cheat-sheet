@@ -17,6 +17,14 @@ QUnit.test('main.js runs with local jQuery when CDN fails', assert => {
     jQueryFactory(window);
   }
 
+  // Prevent jsdom "Not implemented" alert errors
+  window.alert = global.alert = () => {};
+
+  // Stub $.getJSON so no network request is made
+  window.$.getJSON = () => ({
+    fail: cb => { setTimeout(cb, 0); }
+  });
+
   const main = fs.readFileSync('js/main.js', 'utf8');
   window.eval(main);
 
