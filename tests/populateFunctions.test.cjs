@@ -5,7 +5,7 @@ let $;
 let store;
 
 QUnit.module('populate functions', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>\n'
       + '<select id="profiles"></select>\n'
       + '<input type="checkbox" id="foo_1_1">\n'
@@ -31,8 +31,7 @@ QUnit.module('populate functions', hooks => {
 
     window.localStorage.setItem('profiles', JSON.stringify(store));
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

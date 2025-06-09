@@ -5,7 +5,7 @@ let $;
 let deleted;
 
 QUnit.module('resetProgress', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>'
       + '<button id="progressReset"></button>'
       + '</body></html>', { url: 'http://localhost' });
@@ -33,8 +33,7 @@ QUnit.module('resetProgress', hooks => {
     ls.__proto__.removeItem = function(key) { deleted = true; origRemove.call(this, key); };
     ls.setItem('profiles', JSON.stringify(initialStore));
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

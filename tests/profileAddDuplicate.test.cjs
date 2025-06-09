@@ -6,7 +6,7 @@ let store;
 let alertCalled;
 
 QUnit.module('profile add duplicate', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>\n' +
       '<input id="profileModalName">\n' +
       '<div id="profileModal"></div>\n' +
@@ -35,8 +35,7 @@ QUnit.module('profile add duplicate', hooks => {
     global.alert = () => { alertCalled = true; };
     alert = global.alert; // expose
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

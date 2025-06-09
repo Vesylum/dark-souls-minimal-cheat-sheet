@@ -4,7 +4,7 @@ const QUnit = require('qunit');
 let $;
 
 QUnit.module('filterItems', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>' +
       '<ul id="list">' +
         '<li data-id="p">Parent<ul>' +
@@ -23,8 +23,7 @@ QUnit.module('filterItems', hooks => {
 
     $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

@@ -4,7 +4,7 @@ const QUnit = require('qunit');
 let $;
 
 QUnit.module('loadPlaythrough', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>' +
       '<div id="playthrough_sections"></div>' +
       '<ul id="playthrough_nav"></ul>' +
@@ -32,8 +32,7 @@ QUnit.module('loadPlaythrough', hooks => {
       }
     };
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

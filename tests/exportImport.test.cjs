@@ -6,7 +6,7 @@ let store1;
 let store2;
 
 QUnit.module('export/import progress', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>' +
       '<div id="playthrough_sections"></div>' +
       '<ul id="playthrough_nav"></ul>' +
@@ -40,8 +40,7 @@ QUnit.module('export/import progress', hooks => {
 
     window.localStorage.setItem('profiles', JSON.stringify(store1));
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
