@@ -1,0 +1,13 @@
+{
+  "name": "Dark Souls Minimal Cheat Sheet",
+  "short_name": "DS Cheat",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADAAQAAAAB6p1GqAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAAB3YoTpAAAAAd0SU1FB+kGCQENCLVgxogAAAAcSURBVFjD7cExAQAAAMKg9U9tDQ+gAAAAAODXABLAAAEI/p9SAAAAAElFTkSuQmCC",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
