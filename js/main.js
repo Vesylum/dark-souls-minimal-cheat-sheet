@@ -1,5 +1,5 @@
-(function($) {
-    "use strict";
+import $ from "jquery";
+"use strict";
 
     function storageGet(key, def) {
         const val = window.localStorage.getItem(key);
@@ -34,7 +34,7 @@
     }
     let profiles = storageGet(profilesKey, defaultProfiles);
 
-    jQuery(document).ready(function($) {
+    $(document).ready(() => {
 
         loadPlaythrough();
         loadChecklists();
@@ -142,7 +142,7 @@
             const profile = $.trim($name.val());
             if (profile.length > 0) {
                 if (typeof profiles[profilesKey][profile] !== 'undefined') {
-                    alert('Profile already exists');
+                    globalThis.alert('Profile already exists');
                     return;
                 }
                 profiles[profilesKey][profile] = { checklistData: {} };
@@ -160,7 +160,7 @@
            const newName = $.trim($name.val());
             if (newName.length > 0 && newName != profiles.current) {
                 if (typeof profiles[profilesKey][newName] !== 'undefined') {
-                    alert('Profile already exists');
+                    globalThis.alert('Profile already exists');
                     return;
                 }
                 profiles[profilesKey][newName] = profiles[profilesKey][profiles.current];
@@ -357,7 +357,7 @@
         if (request && typeof request.fail === 'function') {
             request.fail(function() {
                 const msg = 'Failed to load playthrough data';
-                alert(msg);
+                globalThis.alert(msg);
                 $('#playthrough_sections').html(
                     '<p class="text-danger">' + msg + '</p>'
                 );
@@ -374,7 +374,7 @@
         if (request && typeof request.fail === 'function') {
             request.fail(function() {
                 const msg = 'Failed to load checklist data';
-                alert(msg);
+                globalThis.alert(msg);
                 $('#checklists').html(
                     '<p class="text-danger">' + msg + '</p>'
                 );
@@ -501,4 +501,3 @@
         window.getFirstProfile = getFirstProfile;
     }
 
-})( jQuery );
