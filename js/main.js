@@ -106,9 +106,11 @@
             const $name = $('#profileModalName');
             const profile = $.trim($name.val());
             if (profile.length > 0) {
-                if (typeof profiles[profilesKey][profile] == 'undefined') {
-                    profiles[profilesKey][profile] = { checklistData: {} };
+                if (typeof profiles[profilesKey][profile] !== 'undefined') {
+                    alert('Profile already exists');
+                    return;
                 }
+                profiles[profilesKey][profile] = { checklistData: {} };
                 profiles.current = profile;
                 storageSet(profilesKey, profiles);
                 populateProfiles();
