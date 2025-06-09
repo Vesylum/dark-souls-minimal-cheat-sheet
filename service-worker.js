@@ -9,7 +9,8 @@ const ASSETS_TO_CACHE = [
   'js/jquery-3.7.1.min.js',
   'js/main.js',
   'data/playthrough.json',
-  'data/checklists.json'
+  'data/checklists.json',
+  'manifest.json'
 ];
 
 self.addEventListener('install', event => {
