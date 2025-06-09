@@ -1,11 +1,10 @@
-const fs = require('fs');
 const { JSDOM } = require('jsdom');
 const jQueryFactory = require('jquery');
 const QUnit = require('qunit');
 
 QUnit.module('jQuery fallback');
 
-QUnit.test('main.js runs with local jQuery when CDN fails', assert => {
+QUnit.test('main.js runs with local jQuery when CDN fails', async assert => {
   const dom = new JSDOM('<!doctype html><html><body></body></html>', {
     runScripts: 'outside-only',
     url: 'http://localhost'
@@ -35,8 +34,7 @@ QUnit.test('main.js runs with local jQuery when CDN fails', assert => {
     fail: cb => { setTimeout(cb, 0); }
   });
 
-  const main = fs.readFileSync('js/main.js', 'utf8');
-  window.eval(main);
+  await import('../js/main.js');
 
   assert.ok(window.jQuery, 'jQuery loaded');
   assert.strictEqual(typeof window.calculateTotals, 'function', 'main.js executed');
