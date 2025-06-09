@@ -15,8 +15,7 @@ QUnit.module('resetProgress', hooks => {
 
     delete require.cache[require.resolve('jquery')];
     $ = require('jquery');
-    global.$ = global.jQuery = $;
-    document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    global.$ = global.jQuery = window.$ = $;
 
     $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
 
@@ -36,13 +35,18 @@ QUnit.module('resetProgress', hooks => {
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
 
   hooks.afterEach(() => {
+    delete global.$;
+    delete global.jQuery;
+    delete window.$;
+    delete global.confirm;
+    delete window.confirm;
     delete global.window;
     delete global.document;
-    delete global.$;
   });
 
 QUnit.test('clears progress and totals', assert => {
