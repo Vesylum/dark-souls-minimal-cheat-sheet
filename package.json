@@ -14,6 +14,7 @@
     "serve": "^14.2.4"
   },
   "scripts": {
+    "build": "node scripts/build.js",
     "start": "npx serve",
     "test": "qunit tests",
     "lint": "eslint js/*.js tests/*.js"

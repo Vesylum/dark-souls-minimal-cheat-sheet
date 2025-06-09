@@ -1,4 +1,5 @@
-const CACHE_NAME = 'dsmcs-cache-v1';
+// The build script injects a versioned cache name during `npm run build`
+const CACHE_NAME = '{{CACHE_NAME}}';
 const ASSETS_TO_CACHE = [
   './',
   'index.html',
