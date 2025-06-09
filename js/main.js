@@ -341,17 +341,11 @@
     }
 
     function canDelete() {
-        let count = 0;
-        $.each(profiles[profilesKey], function(index, value) {
-            count++;
-        });
-        return (count > 1);
+        return Object.keys(profiles[profilesKey]).length > 1;
     }
 
     function getFirstProfile() {
-        for (const profile in profiles[profilesKey]) {
-            return profile;
-        }
+        return Object.keys(profiles[profilesKey])[0];
     }
 
     function loadPlaythrough() {
