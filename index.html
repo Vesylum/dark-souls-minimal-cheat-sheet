@@ -13,20 +13,18 @@
     <!--[if lt IE 9]>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-2ct7Gh6WijC1ga8zmnjHHirFeB8WYm1E9JGHPa9yK6M=" crossorigin="anonymous"></script>
-    <script>
-        if (!window.jQuery) {
-            var script = document.createElement('script');
-            script.src = 'js/jquery-3.7.1.min.js';
-            script.defer = true;
-            document.head.appendChild(script);
+    <script type="importmap">
+    {
+        "imports": {
+            "jquery": "./js/jquery-3.7.1.min.js"
         }
+    }
     </script>
     <script type="text/javascript">
         var profilesKey = 'profiles';
     </script>
     <script defer src="js/bootstrap.min.js"></script>
-    <script defer src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9QN8C279EF"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
