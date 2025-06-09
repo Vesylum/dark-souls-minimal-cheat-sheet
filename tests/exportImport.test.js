@@ -91,4 +91,23 @@ QUnit.module('export/import progress', hooks => {
     $('#progressImport').trigger('click');
     assert.ok(alertCalled, 'alert shown');
   });
+
+  QUnit.test('restoreProfiles rejects invalid profile structure', assert => {
+    const before = JSON.parse(window.localStorage.getItem('profiles'));
+
+    const invalidProfiles = [
+      { current: 'Profile1', profiles: null },
+      { current: 'Profile1', profiles: [] },
+      { current: 'Profile1', profiles: { 'Profile1': null } },
+      { current: 'Profile1', profiles: { 'Profile1': {} } },
+      { current: 'Profile1', profiles: { 'Profile1': { checklistData: [] } } }
+    ];
+
+    for (const bad of invalidProfiles) {
+      assert.notOk(window.restoreProfiles(JSON.stringify(bad)), 'invalid rejected');
+    }
+
+    const after = JSON.parse(window.localStorage.getItem('profiles'));
+    assert.deepEqual(after, before, 'localStorage unchanged');
+  });
 });
