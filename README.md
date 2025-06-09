@@ -22,10 +22,12 @@ A small QUnit test suite validates the client-side logic. Install dependencies w
 ```bash
 npm ci
 npm test
+npm run test:ui
 ```
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
-Run `npm run lint` to check code style across the `js/` directory and the `tests/` sources.
+Run `npm run lint` to check code style across the `js/` directory and the `tests/` sources. A
+separate UI test exercises localStorage integration and can be executed with `npm run test:ui`.
 
 ## Filtering Items
 
