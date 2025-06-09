@@ -23,7 +23,7 @@ export default [
     }
   },
   {
-    files: ['tests/*.js'],
+    files: ['tests/*.cjs'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
