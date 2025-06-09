@@ -9,6 +9,57 @@ details summary {
     margin-bottom: 0.5em;
 }
 
+/* Allow user agent to adjust form controls for dark mode */
+:root {
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.light-theme) {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    body:not(.light-theme) a {
+        color: #8ab4f8;
+    }
+    body:not(.light-theme) .navbar,
+    body:not(.light-theme) .navbar-inner {
+        background-color: #333;
+        color: #e0e0e0;
+    }
+    body:not(.light-theme) .table-striped tbody tr:nth-child(odd) td,
+    body:not(.light-theme) .table-striped tbody tr:nth-child(odd) th {
+        background-color: #1e1e1e;
+    }
+    body:not(.light-theme) input[type="checkbox"] {
+        accent-color: #0d6efd;
+    }
+    body:not(.light-theme) .in_progress { color: #ffb74d; }
+    body:not(.light-theme) .done { color: #66bb6a; }
+}
+
+body.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-theme a {
+    color: #8ab4f8;
+}
+body.dark-theme .navbar,
+body.dark-theme .navbar-inner {
+    background-color: #333;
+    color: #e0e0e0;
+}
+body.dark-theme .table-striped tbody tr:nth-child(odd) td,
+body.dark-theme .table-striped tbody tr:nth-child(odd) th {
+    background-color: #1e1e1e;
+}
+body.dark-theme input[type="checkbox"] {
+    accent-color: #0d6efd;
+}
+body.dark-theme .in_progress { color: #ffb74d; }
+body.dark-theme .done { color: #66bb6a; }
+
 @media print {
     body { color: #000; }
     .navbar, #intro, input[type="checkbox"] { display: none; }

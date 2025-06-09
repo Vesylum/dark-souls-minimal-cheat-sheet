@@ -34,8 +34,26 @@
     }
     let profiles = storageGet(profilesKey, defaultProfiles);
 
+    const themeKey = 'theme';
+
+    function applyTheme() {
+        const pref = window.localStorage.getItem(themeKey) || 'system';
+        const body = document.body;
+        if (pref === 'dark' || pref === 'light') {
+            body.classList.remove('dark-theme', 'light-theme');
+            body.classList.add(pref + '-theme');
+        } else {
+            body.classList.remove('dark-theme', 'light-theme');
+        }
+        const select = document.getElementById('themeSelect');
+        if (select) {
+            select.value = pref;
+        }
+    }
+
     jQuery(document).ready(function($) {
 
+        applyTheme();
         loadPlaythrough();
         loadChecklists();
         populateProfiles();
@@ -58,6 +76,12 @@
             profiles.current = $select.val();
             storageSet(profilesKey, profiles);
             populateChecklists();
+        });
+
+        $('#themeSelect').change(function() {
+            const val = $(this).val();
+            window.localStorage.setItem(themeKey, val);
+            applyTheme();
         });
 
         $('#profileAdd').click(function() {
@@ -451,6 +475,7 @@
         window.populateChecklists = populateChecklists;
         window.canDelete = canDelete;
         window.getFirstProfile = getFirstProfile;
+        window.applyTheme = applyTheme;
     }
 
 })( jQuery );
