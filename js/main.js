@@ -289,7 +289,8 @@
             if (!('checklistData' in entry)) {
                 return false;
             }
-            if (typeof entry.checklistData !== 'object' || entry.checklistData === null) {
+            const notArray = !Array.isArray(entry.checklistData);
+            if (typeof entry.checklistData !== 'object' || entry.checklistData === null || !notArray) {
                 return false;
             }
         }
