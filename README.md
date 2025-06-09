@@ -26,8 +26,10 @@ npm run test:ui
 ```
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
-Run `npm run lint` to check code style across the `js/` directory and the `tests/` sources. A
-separate UI test exercises localStorage integration and can be executed with `npm run test:ui`.
+Run `npm run lint` to check code style across the `js/` directory and the `tests/` sources.
+Format files with `npm run format` and run `npm run typecheck` for a lightweight TypeScript
+check. A separate UI test exercises localStorage integration and can be executed with
+`npm run test:ui`.
 
 ## Filtering Items
 

@@ -1,0 +1,4 @@
+node_modules
+js/bootstrap.min.js
+js/jquery-3.7.1.min.js
+service-worker.js
