@@ -1,6 +1,6 @@
 const CACHE_NAME = 'dsmcs-cache-v1';
 const ASSETS_TO_CACHE = [
-  '/',
+  './',
   'index.html',
   'css/bootstrap.min.css',
   'css/bootstrap-responsive.min.css',
