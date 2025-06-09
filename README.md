@@ -8,6 +8,7 @@ This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. Th
 
 All files are static HTML, CSS and JavaScript. Clone the repo and serve the directory with a local HTTP server. Run `npm start` to launch the locally installed `serve` package, or run `python -m http.server` in the project root and then open the provided URL in your browser.
 Before serving, generate the service worker with `npm run build` so the cache name includes the current version.
+Rebuild the service worker with the same command whenever any static files (HTML, CSS, JavaScript or JSON) change so cached assets stay up to date.
 
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 Individual sections are collapsible using the native `<details>`/`<summary>` elements with the first section expanded by default.
@@ -46,7 +47,7 @@ restore your progress after clearing your storage or on another browser.
 ## Service Worker Cache
 
 The service worker caches `index.html`, CSS, JavaScript and JSON data so the
-site works offline. Run `npm run build` whenever files change to regenerate
+site works offline. Run `npm run build` whenever static files change to regenerate
 `service-worker.js` with a versioned `CACHE_NAME`. Older caches with different
 names are deleted during the service worker's `activate` event. You can also
 manually clear storage from your browser's developer tools if needed.
