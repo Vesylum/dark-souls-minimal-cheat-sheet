@@ -12,7 +12,16 @@ QUnit.test('main.js runs with local jQuery when CDN fails', assert => {
   });
   const { window } = dom;
 
-  // Simulate CDN failure by loading local jQuery if needed
+  // Simulate CDN failure and run the fallback snippet
+  const fallback = `
+    if (!window.jQuery) {
+      var script = document.createElement('script');
+      script.src = 'js/jquery-3.7.1.min.js';
+      document.head.appendChild(script);
+    }
+  `;
+  window.eval(fallback);
+
   if (!window.jQuery) {
     jQueryFactory(window);
   }
