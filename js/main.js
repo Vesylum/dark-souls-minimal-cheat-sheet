@@ -40,6 +40,14 @@
         loadChecklists();
         populateProfiles();
 
+        $('#playthroughFilter').on('input', function() {
+            filterItems(this.value, '#playthrough_sections');
+        });
+
+        $('#checklistFilter').on('input', function() {
+            filterItems(this.value, '#checklists');
+        });
+
         $(document).on('change', 'input[type="checkbox"]', function () {
             const $checkbox = $(this);
             const id = $checkbox.attr('id');
@@ -438,6 +446,14 @@
                 $li.append($child);
             }
             $ul.append($li);
+        });
+    }
+
+    function filterItems(query, containerSelector) {
+        const q = query.toLowerCase();
+        $(containerSelector).find('li[data-id]').each(function() {
+            const text = $(this).text().toLowerCase();
+            $(this).toggle(text.indexOf(q) !== -1);
         });
     }
 
