@@ -31,6 +31,12 @@ npm test
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
 
+## Filtering Items
+
+Both the Playthrough and Checklists tabs have a search field above the sections.
+Entering text there hides list items that do not contain the query. Filtering is
+purely visual and does not modify your saved progress.
+
 ## Exporting and Importing Progress
 
 The site stores your checklist data in the browser. Click **Export Progress** to
