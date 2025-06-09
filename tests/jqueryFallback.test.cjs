@@ -17,6 +17,7 @@ QUnit.test('main.js runs with local jQuery when CDN fails', assert => {
     if (!window.jQuery) {
       var script = document.createElement('script');
       script.src = 'js/jquery-3.7.1.min.js';
+      script.defer = true;
       document.head.appendChild(script);
     }
   `;
