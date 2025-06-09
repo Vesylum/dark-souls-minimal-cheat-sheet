@@ -6,7 +6,7 @@ This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. Th
 
 ## Development
 
-All files are static HTML, CSS and JavaScript. Clone the repo and serve the directory with a local HTTP server. Run `npm start` (which uses `npx serve`) or `python -m http.server` in the project root and then open the provided URL in your browser.
+All files are static HTML, CSS and JavaScript. Clone the repo and serve the directory with a local HTTP server. Run `npm start` to launch the locally installed `serve` package, or run `python -m http.server` in the project root and then open the provided URL in your browser.
 
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 
