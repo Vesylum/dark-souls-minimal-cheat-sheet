@@ -13,13 +13,7 @@ Rebuild the service worker with the same command whenever any static files (HTML
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
 Individual sections are collapsible using the native `<details>`/`<summary>` elements with the first section expanded by default.
 
-Development and the test suite expect **Node.js 20** or newer and use Node's ES module support. The `package.json` file sets `"type": "module"` so Node treats `*.js` files as ES modules. You can check your installed version with `node --version`.
-An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm use` after cloning.
-When installing dependencies, run `npm ci` to guarantee a reproducible environment.
-The Node build scripts use ES module syntax. `package.json` sets `"type": "module"` so Node treats `.js` files as ES modules.
-
-Node scripts use ES module syntax. The `package.json` file sets `"type": "module"`
-so Node treats `.js` files as ES modules.
+Development and the test suite require **Node.js 20** or newer and use Node's ES module support. An `.nvmrc` file pins this version for `nvm` users; run `nvm use` after cloning and `npm ci` to install dependencies.
 
 ## Running Tests
 
