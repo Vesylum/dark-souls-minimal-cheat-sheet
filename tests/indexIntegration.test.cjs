@@ -12,6 +12,7 @@ function teardownDom(dom) {
   delete global.window;
   delete global.document;
   delete global.alert;
+  delete globalThis.alert;
   if (dom) {
     dom.window.close();
   }
@@ -24,7 +25,7 @@ async function setupDom() {
   global.window = window;
   global.document = window.document;
   window.profilesKey = 'profiles';
-  global.alert = () => {};
+  global.alert = globalThis.alert = () => {};
   alert = global.alert;
 
   delete require.cache[require.resolve('jquery')];
