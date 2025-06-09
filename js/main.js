@@ -228,6 +228,7 @@
 
         const label = document.createElement('label');
         label.className = 'checkbox';
+        label.htmlFor = id;
 
         const input = document.createElement('input');
         input.type = 'checkbox';
@@ -238,6 +239,8 @@
         while (el.firstChild && !(el.firstChild.nodeType === 1 && el.firstChild.tagName === 'UL')) {
             label.appendChild(el.firstChild);
         }
+
+        input.setAttribute('aria-label', label.textContent.trim());
 
         el.insertBefore(label, el.firstChild);
 

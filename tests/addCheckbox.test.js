@@ -62,6 +62,13 @@ QUnit.module('addCheckbox', hooks => {
     assert.strictEqual(childUl.parentElement, li, 'child ul not inside label');
   });
 
+  QUnit.test('accessibility attributes are added', assert => {
+    const label = document.querySelector('li[data-id="foo_1_1"] > label');
+    const input = label.firstElementChild;
+    assert.strictEqual(label.htmlFor, 'foo_1_1', 'label htmlFor set');
+    assert.strictEqual(input.getAttribute('aria-label'), 'Item 1', 'aria-label set');
+  });
+
   QUnit.test('clicking dynamically created checkbox updates profiles', assert => {
     const checkbox = document.getElementById('foo_1_1');
     assert.ok(checkbox, 'checkbox exists');
