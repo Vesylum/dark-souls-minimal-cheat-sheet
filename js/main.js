@@ -90,16 +90,42 @@
 
         $('#progressExport').click(function() {
             const data = serializeProfiles();
-            window.prompt('Copy your progress JSON', data);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const $link = $('#progressDownload');
+            if ($link.length) {
+                $link.attr('href', url);
+                $link[0].click();
+                setTimeout(() => URL.revokeObjectURL(url));
+            }
         });
 
         $('#progressImport').click(function() {
-            const data = window.prompt('Paste progress JSON to import');
-            if (data) {
-                if (!restoreProfiles(data)) {
-                    alert('Invalid progress data');
-                }
+            const $file = $('#progressFile');
+            if ($file.length) {
+                $file.trigger('click');
             }
+        });
+
+        $('#progressFile').change(function() {
+            const file = this.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const ok = restoreProfiles(e.target.result);
+                if (!ok) {
+                    $('#importError').text('Invalid progress data');
+                } else {
+                    $('#importError').text('');
+                }
+            };
+            reader.onerror = function() {
+                $('#importError').text('Unable to read file');
+            };
+            reader.readAsText(file);
+            $(this).val('');
         });
 
         $('#profileModalAdd').click(function(event) {

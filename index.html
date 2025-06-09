@@ -56,7 +56,10 @@
                         <button class="btn" type="button" id="profileEdit">Edit</button>
                         <button class="btn btn-danger" type="button" id="progressReset">Reset Progress</button>
                         <button class="btn" type="button" id="progressExport">Export Progress</button>
+                        <a class="btn" id="progressDownload" download="progress.json" style="display:none;">Download</a>
                         <button class="btn" type="button" id="progressImport">Import Progress</button>
+                        <input type="file" id="progressFile" accept="application/json" style="display:none;" />
+                        <span id="importError" class="text-danger"></span>
                    </div>
                 </div>
             </div>

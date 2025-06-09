@@ -13,7 +13,11 @@ QUnit.module('export/import progress', hooks => {
       '<select id="profiles"></select>' +
       '<input type="checkbox" id="foo_1_1">' +
       '<input type="checkbox" id="foo_1_2">' +
+      '<button id="progressExport"></button>' +
+      '<a id="progressDownload"></a>' +
       '<button id="progressImport"></button>' +
+      '<input id="progressFile" type="file">' +
+      '<span id="importError"></span>' +
       '</body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
@@ -46,8 +50,6 @@ QUnit.module('export/import progress', hooks => {
     delete global.window;
     delete global.document;
     delete global.$;
-    delete global.alert;
-    delete global.prompt;
   });
 
   QUnit.test('serializeProfiles returns stored JSON', assert => {
@@ -77,19 +79,51 @@ QUnit.module('export/import progress', hooks => {
     assert.strictEqual(document.getElementById('profiles').value, 'Profile1', 'profile select unchanged');
   });
 
-  QUnit.test('restoreProfiles rejects bad JSON and import button alerts', assert => {
+  QUnit.test('restoreProfiles rejects bad JSON and import button shows error', assert => {
     const before = JSON.parse(window.localStorage.getItem('profiles'));
     const ok = window.restoreProfiles('bad json');
     assert.notOk(ok, 'restore failed');
     const after = JSON.parse(window.localStorage.getItem('profiles'));
     assert.deepEqual(after, before, 'localStorage unchanged');
 
-    let alertCalled = false;
-    window.prompt = global.prompt = () => 'bad json';
-    window.alert = global.alert = () => { alertCalled = true; };
+    class FR {
+      readAsText() { this.onload({ target: { result: 'bad json' } }); }
+    }
+    window.FileReader = FR;
 
-    $('#progressImport').trigger('click');
-    assert.ok(alertCalled, 'alert shown');
+    $('#progressFile').trigger('change', { target: { files: [new Blob()] } });
+    assert.strictEqual(document.getElementById('importError').textContent, 'Invalid progress data', 'error shown');
+    delete window.FileReader;
+  });
+
+  QUnit.test('export generates downloadable blob', async assert => {
+    let blobArg;
+    const orig = window.URL.createObjectURL;
+    window.URL.createObjectURL = b => { blobArg = b; return 'blob:url'; };
+    const link = document.getElementById('progressDownload');
+    let clicked = false;
+    link.click = () => { clicked = true; };
+
+    $('#progressExport').trigger('click');
+
+    assert.ok(clicked, 'download triggered');
+    const text = await blobArg.text();
+    assert.strictEqual(text, JSON.stringify(store1), 'blob content');
+    window.URL.createObjectURL = orig;
+  });
+
+  QUnit.test('file import loads progress', assert => {
+    class FR {
+      readAsText() { this.onload({ target: { result: JSON.stringify(store2) } }); }
+    }
+    window.FileReader = FR;
+
+    $('#progressFile').trigger('change', { target: { files: [new Blob()] } });
+
+    const saved = JSON.parse(window.localStorage.getItem('profiles'));
+    assert.deepEqual(saved, store2, 'localStorage updated');
+    assert.strictEqual(document.getElementById('profiles').value, 'Profile2', 'profile select updated');
+    delete window.FileReader;
   });
 
   QUnit.test('restoreProfiles rejects invalid profile structure', assert => {
