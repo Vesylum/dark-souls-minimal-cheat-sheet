@@ -36,6 +36,7 @@
     jQuery(document).ready(function($) {
 
         loadPlaythrough();
+        loadChecklists();
         populateProfiles();
 
         $(document).on('change', 'input[type="checkbox"]', function () {
@@ -309,6 +310,23 @@
         }
     }
 
+    function loadChecklists() {
+        const request = $.getJSON('data/checklists.json', function(data) {
+            renderChecklists(data);
+            $('li[data-id]').each(function () { addCheckbox(this); });
+            populateChecklists();
+        });
+        if (request && typeof request.fail === 'function') {
+            request.fail(function() {
+                const msg = 'Failed to load checklist data';
+                alert(msg);
+                $('#checklists').html(
+                    '<p class="text-danger">' + msg + '</p>'
+                );
+            });
+        }
+    }
+
     function renderPlaythrough(sections) {
         const $nav = $('#playthrough_nav');
         const $container = $('#playthrough_sections');
@@ -339,6 +357,34 @@
             const $ul = $('<ul></ul>');
             buildItems(section.items, $ul);
             $container.append($ul);
+        });
+    }
+
+    function renderChecklists(sections) {
+        const $container = $('#checklists');
+        $container.empty();
+
+        const $nav = $('<ul></ul>');
+        $container.append($nav);
+        $container.append('<hr />');
+
+        const $sections = $('<div></div>');
+        $container.append($sections);
+
+        $.each(sections, function(i, section) {
+            const index = i + 1;
+            const $navLi = $('<li></li>');
+            $navLi.append($('<a></a>').attr('href', '#' + section.id).text(section.title));
+            $navLi.append(' <span id="checklist_nav_totals_' + index + '"></span>');
+            $nav.append($navLi);
+
+            const $header = $('<h3></h3>').attr('id', section.id).text(section.title);
+            $header.append(' <span id="checklist_totals_' + index + '"></span>');
+            $sections.append($header);
+
+            const $ul = $('<ul></ul>');
+            buildItems(section.items, $ul);
+            $sections.append($ul);
         });
     }
 
