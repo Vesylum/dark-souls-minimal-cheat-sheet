@@ -34,7 +34,7 @@
     }
     let profiles = storageGet(profilesKey, defaultProfiles);
 
-    jQuery(document).ready(function($) {
+    $(document).ready(function() {
 
         loadPlaythrough();
         loadChecklists();
@@ -501,4 +501,4 @@
         window.getFirstProfile = getFirstProfile;
     }
 
-})( jQuery );
+})( window.jQuery );

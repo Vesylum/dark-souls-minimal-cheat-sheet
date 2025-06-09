@@ -13,8 +13,7 @@ export default [
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
-        ...globals.browser,
-        ...globals.jquery
+        ...globals.browser
       }
     },
     rules: {
