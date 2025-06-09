@@ -347,5 +347,12 @@
             <a href="#" id="profileModalDelete" class="btn btn-danger">Delete</a>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('service-worker.js');
+            }
+        };
+    </script>
 </body>
 </html>
