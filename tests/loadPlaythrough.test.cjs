@@ -15,7 +15,7 @@ QUnit.module('loadPlaythrough', hooks => {
     global.document = window.document;
 
     delete require.cache[require.resolve('jquery')];
-    $ = require('jquery');
+    $ = require('jquery')(window);
     global.$ = global.jQuery = window.$ = $;
 
     $.getJSON = (url, cb) => {

@@ -10,7 +10,7 @@ async function setup(store) {
   global.document = window.document;
 
   delete require.cache[require.resolve('jquery')];
-  $ = require('jquery');
+  $ = require('jquery')(window);
   global.$ = global.jQuery = window.$ = $;
 
   $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
