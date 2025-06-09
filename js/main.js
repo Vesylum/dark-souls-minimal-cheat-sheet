@@ -9,6 +9,7 @@
         try {
             return JSON.parse(val);
         } catch (e) {
+            storageDelete(key);
             return $.extend(true, {}, def);
         }
     }
