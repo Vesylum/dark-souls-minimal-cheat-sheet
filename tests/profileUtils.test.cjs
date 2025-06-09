@@ -17,8 +17,7 @@ async function setup(store) {
 
   window.localStorage.setItem('profiles', JSON.stringify(store));
 
-  delete require.cache[require.resolve('../js/main.js')];
-  require('../js/main.js');
+  await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
   await new Promise(r => setTimeout(r, 50));
 }

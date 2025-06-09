@@ -5,7 +5,7 @@ let $;
 let alertCalled;
 
 QUnit.module('loadChecklists failure', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body>' +
       '<div id="checklists"></div>' +
       '</body></html>', { url: 'http://localhost' });
@@ -25,8 +25,7 @@ QUnit.module('loadChecklists failure', hooks => {
     global.alert = () => { alertCalled = true; };
     alert = global.alert;
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });

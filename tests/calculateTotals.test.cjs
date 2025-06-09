@@ -4,7 +4,7 @@ const QUnit = require('qunit');
 let $;
 
 QUnit.module('calculateTotals', hooks => {
-  hooks.beforeEach(() => {
+  hooks.beforeEach(async () => {
     const dom = new JSDOM('<!doctype html><html><body></body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
@@ -17,8 +17,7 @@ QUnit.module('calculateTotals', hooks => {
     $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
 
 
-    delete require.cache[require.resolve('../js/main.js')];
-    require('../js/main.js');
+    await import('../js/main.js');
     document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
