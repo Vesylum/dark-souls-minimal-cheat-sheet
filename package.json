@@ -9,7 +9,8 @@
   "devDependencies": {
     "qunit": "^2.20.0",
     "jsdom": "^26.1.0",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "serve": "^14.2.4"
   },
   "scripts": {
     "start": "npx serve",
