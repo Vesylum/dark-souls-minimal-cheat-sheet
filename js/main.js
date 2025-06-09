@@ -104,7 +104,7 @@
             if ($link.length) {
                 $link.attr('href', url);
                 $link[0].click();
-                setTimeout(() => URL.revokeObjectURL(url));
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
             }
         });
 
