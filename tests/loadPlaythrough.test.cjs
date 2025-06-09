@@ -16,8 +16,7 @@ QUnit.module('loadPlaythrough', hooks => {
 
     delete require.cache[require.resolve('jquery')];
     $ = require('jquery');
-    global.$ = global.jQuery = $;
-    document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    global.$ = global.jQuery = window.$ = $;
 
     $.getJSON = (url, cb) => {
       if (url.includes('playthrough')) {
@@ -35,13 +34,16 @@ QUnit.module('loadPlaythrough', hooks => {
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
 
   hooks.afterEach(() => {
+    delete global.$;
+    delete global.jQuery;
+    delete window.$;
     delete global.window;
     delete global.document;
-    delete global.$;
   });
 
   QUnit.test('renders playthrough from JSON', assert => {

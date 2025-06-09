@@ -25,8 +25,7 @@ QUnit.module('export/import progress', hooks => {
 
     delete require.cache[require.resolve('jquery')];
     $ = require('jquery');
-    global.$ = global.jQuery = $;
-    document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    global.$ = global.jQuery = window.$ = $;
 
     $.getJSON = (_url, cb) => { setTimeout(() => cb({}), 0); };
 
@@ -43,13 +42,16 @@ QUnit.module('export/import progress', hooks => {
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
 
   hooks.afterEach(() => {
+    delete global.$;
+    delete global.jQuery;
+    delete window.$;
     delete global.window;
     delete global.document;
-    delete global.$;
   });
 
   QUnit.test('serializeProfiles returns stored JSON', assert => {

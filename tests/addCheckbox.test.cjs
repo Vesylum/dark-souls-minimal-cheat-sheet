@@ -15,8 +15,7 @@ QUnit.module('addCheckbox', hooks => {
 
     delete require.cache[require.resolve('jquery')];
     $ = require('jquery');
-    global.$ = global.jQuery = $;
-    document.dispatchEvent(new window.Event('DOMContentLoaded'));
+    global.$ = global.jQuery = window.$ = $;
 
     $.getJSON = (_url, cb) => {
       setTimeout(() => cb([
@@ -36,15 +35,16 @@ QUnit.module('addCheckbox', hooks => {
 
     delete require.cache[require.resolve('../js/main.js')];
     require('../js/main.js');
+    document.dispatchEvent(new window.Event('DOMContentLoaded'));
     return new Promise(r => setTimeout(r, 50));
   });
-
   hooks.afterEach(() => {
+    delete global.$;
+    delete global.jQuery;
+    delete window.$;
     delete global.window;
     delete global.document;
-    delete global.$;
   });
-
   QUnit.test('checkbox and label inserted correctly', assert => {
     const li = document.querySelector('li[data-id="foo_1_1"]');
     assert.ok(li, 'li exists');
