@@ -13,6 +13,7 @@ QUnit.module('export/import progress', hooks => {
       '<select id="profiles"></select>' +
       '<input type="checkbox" id="foo_1_1">' +
       '<input type="checkbox" id="foo_1_2">' +
+      '<button id="progressImport"></button>' +
       '</body></html>', { url: 'http://localhost' });
     const { window } = dom;
     global.window = window;
@@ -72,5 +73,20 @@ QUnit.module('export/import progress', hooks => {
     const after = JSON.parse(window.localStorage.getItem('profiles'));
     assert.deepEqual(after, before, 'localStorage unchanged');
     assert.strictEqual(document.getElementById('profiles').value, 'Profile1', 'profile select unchanged');
+  });
+
+  QUnit.test('restoreProfiles rejects bad JSON and import button alerts', assert => {
+    const before = JSON.parse(window.localStorage.getItem('profiles'));
+    const ok = window.restoreProfiles('bad json');
+    assert.notOk(ok, 'restore failed');
+    const after = JSON.parse(window.localStorage.getItem('profiles'));
+    assert.deepEqual(after, before, 'localStorage unchanged');
+
+    let alertCalled = false;
+    window.prompt = global.prompt = () => 'bad json';
+    window.alert = global.alert = () => { alertCalled = true; };
+
+    $('#progressImport').trigger('click');
+    assert.ok(alertCalled, 'alert shown');
   });
 });
