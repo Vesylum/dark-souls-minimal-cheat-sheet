@@ -15,6 +15,7 @@ Individual sections are collapsible using the native `<details>`/`<summary>` ele
 Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
 An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm use` after cloning.
 When installing dependencies, run `npm ci` to guarantee a reproducible environment.
+The Node build scripts use ES module syntax. `package.json` sets `"type": "module"` so Node treats `.js` files as ES modules.
 
 ## Running Tests
 

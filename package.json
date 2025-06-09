@@ -2,6 +2,7 @@
   "name": "dark-souls-minimal-cheat-sheet",
   "version": "1.0.0",
   "description": "Dark Souls Minimal Cheat Sheet",
+  "type": "module",
   "repository": "https://github.com/Vesylum/dark-souls-minimal-cheat-sheet",
   "engines": {
     "node": ">=20"
