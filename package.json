@@ -13,13 +13,17 @@
     "jsdom": "^26.1.0",
     "qunit": "^2.20.0",
     "serve": "^14.2.4",
-    "@testing-library/dom": "^10.4.0"
+    "@testing-library/dom": "^10.4.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "build": "node scripts/build.js",
     "start": "npx serve",
     "test": "qunit tests",
-    "lint": "eslint js/*.js tests/*.cjs",
+    "lint": "eslint js/*.js tests/*.cjs && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
     "test:ui": "qunit tests/uiLocalStorageSync.test.cjs"
   }
 }
