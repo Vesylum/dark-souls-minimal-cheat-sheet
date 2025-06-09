@@ -344,6 +344,11 @@
             $navLi.append(' <span id="playthrough_nav_totals_' + index + '"></span>');
             $nav.append($navLi);
 
+            const $details = $('<details></details>');
+            if (i === 0) {
+                $details.attr('open', true);
+            }
+            const $summary = $('<summary></summary>');
             const $header = $('<h3></h3>').attr('id', section.id);
             if (section.href) {
                 $header.append($('<a></a>').attr('href', section.href).text(section.title));
@@ -354,11 +359,13 @@
                 $header.append(' (' + section.level + ')');
             }
             $header.append(' <span id="playthrough_totals_' + index + '"></span>');
-            $container.append($header);
+            $summary.append($header);
+            $details.append($summary);
 
             const $ul = $('<ul></ul>');
             buildItems(section.items, $ul);
-            $container.append($ul);
+            $details.append($ul);
+            $container.append($details);
         });
     }
 
@@ -380,13 +387,20 @@
             $navLi.append(' <span id="checklist_nav_totals_' + index + '"></span>');
             $nav.append($navLi);
 
+            const $details = $('<details></details>');
+            if (i === 0) {
+                $details.attr('open', true);
+            }
+            const $summary = $('<summary></summary>');
             const $header = $('<h3></h3>').attr('id', section.id).text(section.title);
             $header.append(' <span id="checklist_totals_' + index + '"></span>');
-            $sections.append($header);
+            $summary.append($header);
+            $details.append($summary);
 
             const $ul = $('<ul></ul>');
             buildItems(section.items, $ul);
-            $sections.append($ul);
+            $details.append($ul);
+            $sections.append($details);
         });
     }
 

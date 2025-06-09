@@ -9,6 +9,7 @@ This repository contains the code for the **Dark Souls Minimal Cheat Sheet**. Th
 All files are static HTML, CSS and JavaScript. Clone the repo and serve the directory with a local HTTP server. Run `npm start` to launch the locally installed `serve` package, or run `python -m http.server` in the project root and then open the provided URL in your browser.
 
 Checklist content now lives in `data/playthrough.json`. This file lists each playthrough section and the items within it. The JavaScript fetches this JSON on page load and generates the checklist dynamically.
+Individual sections are collapsible using the native `<details>`/`<summary>` elements with the first section expanded by default.
 
 Development and the test suite expect **Node.js 20** or newer. You can check your installed version with `node --version`.
 An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm use` after cloning.

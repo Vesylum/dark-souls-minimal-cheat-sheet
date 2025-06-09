@@ -4,6 +4,11 @@ th { text-align: left;}
 .in_progress { color: #AA4400; }
 .done { color: #006622; }
 
+details summary {
+    cursor: pointer;
+    margin-bottom: 0.5em;
+}
+
 @media print {
     body { color: #000; }
     .navbar, #intro, input[type="checkbox"] { display: none; }
