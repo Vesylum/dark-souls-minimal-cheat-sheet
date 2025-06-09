@@ -17,6 +17,9 @@ An `.nvmrc` file at the project root pins this version for `nvm` users; run `nvm
 When installing dependencies, run `npm ci` to guarantee a reproducible environment.
 The Node build scripts use ES module syntax. `package.json` sets `"type": "module"` so Node treats `.js` files as ES modules.
 
+Node scripts use ES module syntax. The `package.json` file sets `"type": "module"`
+so Node treats `.js` files as ES modules.
+
 ## Running Tests
 
 A small QUnit test suite validates the client-side logic. Install dependencies with `npm ci` for reproducible installs and run the tests with:
