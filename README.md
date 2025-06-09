@@ -25,6 +25,7 @@ npm test
 ```
 
 The tests execute under Node.js using jsdom to simulate a browser environment.
+Run `npm run lint` to check code style across the `js/` directory and the `tests/` sources.
 
 ## Filtering Items
 
