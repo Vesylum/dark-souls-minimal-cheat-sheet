@@ -46,6 +46,8 @@ QUnit.module('export/import progress', hooks => {
     delete global.window;
     delete global.document;
     delete global.$;
+    delete global.alert;
+    delete global.prompt;
   });
 
   QUnit.test('serializeProfiles returns stored JSON', assert => {

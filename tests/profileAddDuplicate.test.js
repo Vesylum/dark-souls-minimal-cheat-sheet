@@ -45,6 +45,7 @@ QUnit.module('profile add duplicate', hooks => {
     delete global.window;
     delete global.document;
     delete global.$;
+    delete global.alert;
   });
 
   QUnit.test('alert when adding existing profile', assert => {

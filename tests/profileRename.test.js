@@ -45,6 +45,7 @@ QUnit.module('profile rename', hooks => {
     delete global.window;
     delete global.document;
     delete global.$;
+    delete global.alert;
   });
 
 QUnit.test('alert when renaming to existing profile', assert => {
