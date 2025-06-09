@@ -7,13 +7,15 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "qunit": "^2.20.0",
-    "jsdom": "^26.1.0",
+    "eslint": "^9.28.0",
     "jquery": "^3.7.1",
+    "jsdom": "^26.1.0",
+    "qunit": "^2.20.0",
     "serve": "^14.2.4"
   },
   "scripts": {
     "start": "npx serve",
-    "test": "qunit tests"
+    "test": "qunit tests",
+    "lint": "eslint js/*.js tests/*.js"
   }
 }
