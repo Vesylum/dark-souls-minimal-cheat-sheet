@@ -275,9 +275,29 @@
         if (typeof data.current !== 'string') {
             return false;
         }
-        if (!(data.current in data[profilesKey])) {
+
+        const importedProfiles = data[profilesKey];
+        if (!importedProfiles || typeof importedProfiles !== 'object') {
             return false;
         }
+
+        for (const name in importedProfiles) {
+            const entry = importedProfiles[name];
+            if (!entry || typeof entry !== 'object') {
+                return false;
+            }
+            if (!('checklistData' in entry)) {
+                return false;
+            }
+            if (typeof entry.checklistData !== 'object' || entry.checklistData === null) {
+                return false;
+            }
+        }
+
+        if (!(data.current in importedProfiles)) {
+            return false;
+        }
+
         profiles = data;
         storageSet(profilesKey, profiles);
         populateProfiles();
