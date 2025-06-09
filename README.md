@@ -31,6 +31,14 @@ The site stores your checklist data in the browser. Click **Export Progress** to
 copy it as a JSON string. Use **Import Progress** to paste that string into
 another browser or after clearing your storage to restore your progress.
 
+## Service Worker Cache
+
+The service worker caches `index.html`, CSS, JavaScript and JSON data so the
+site works offline. To force clients to update their cache, change the
+`CACHE_NAME` constant in `service-worker.js`. Older caches with different names
+are deleted during the service worker's `activate` event. You can also manually
+clear storage from your browser's developer tools if needed.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
