@@ -35,6 +35,7 @@ QUnit.module('loadChecklists failure', hooks => {
     delete global.window;
     delete global.document;
     delete global.$;
+    delete global.alert;
   });
 
   QUnit.test('shows error and alerts user on JSON fail', assert => {
